@@ -53,6 +53,8 @@ camera.position.z= 5;
 
 //for resizing or responsive sizing we use event listener resize on window
 
+window.addEventListener('resize',handleResize)// its event listener use on window obj to resize the canvas and changes the value according to the resizing in the handlerfunction
+
 function handleResize(){
     //define size of canvas and update prjection of camera according to window size .
     sizes.width = window.innerWidth
@@ -63,7 +65,6 @@ function handleResize(){
     renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
 }
 
-window.addEventListener('resize',handleResize)// its event listener use on window obj to resize the canvas and changes the value according to the resizing in the handlerfunction
 
 
 
