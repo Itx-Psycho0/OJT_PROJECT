@@ -15,7 +15,10 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 // IMPORTANT: We must move the camera back! 
 // By default, the camera and objects spawn at (0,0,0). 
 // If the camera is inside the object, we won't see it.
-camera.position.z = 50;
+camera.position.z = 10;
+// --- FIX: LOOK AT THE WORLD ---
+camera.lookAt(0, 0, 0); 
+// -----------------------------
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);// Make it full screen
@@ -72,6 +75,10 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(5, 10, 7.5);
 scene.add(directionalLight);
 
+// // Create the Sea
+// const sea = new Sea();
+// scene.add(sea.mesh);
+
 
 
 // --- 5. HELPER FUNCTION (The Math) ---
@@ -101,25 +108,41 @@ function normalize(v, vmin, vmax, tmin, tmax) {
 
 // 5. The Initial Render (Taking the photo)
 function animate() {
-    // 1. Schedule the NEXT frame immediately
+    // 1. Schedule next frame
     requestAnimationFrame(animate);
-    // Define a target X based on mouse position (e.g., range of -75 to 75)
-    // You might need to tune the '75' depending on how wide your screen is
-    let targetX = normalize(mousePos.x, -0.75, 0.75, -75, 75);
-    let targetY = normalize(mousePos.y, -0.75, 0.75, 25, 175); // Y goes from 25 (low) to 175 (high)
 
-    // 2. Update Logic (Move things)
-    // Update position with Lerp (0.1 is the speed factor)
-    myShip.position.y += (targetY - myShip.position.y) * 0.1;
-    myShip.position.x += (targetX - myShip.position.x) * 0.1;
-    myShip.rotation.z = (targetY - myShip.position.y) * 0.0128;
-    myShip.rotation.x = (myShip.position.y - targetY) * 0.0064;
-    myShip.rotation.z = (targetY - myShip.position.y) * 0.0128;
-    myShip.rotation.x = (myShip.position.y - targetY) * 0.0064;
-    // myShip.rotation.x += mousePos.x * 0.05;
+    // 2. Calculate Targets (Where we WANT to be)
+    // -75 to 75 is the range of the world
+    let targetX = normalize(mousePos.x, -0.75, 0.75, -3, 3);
+    let targetY = normalize(mousePos.y, -0.75, 0.75, -5, 5);
+
+    // 3. Move the Ship (Lerp)
+    // We check if .mesh exists, otherwise we use myShip directly
+    let shipObj = myShip.mesh || myShip; 
+
+    // Move Position
+    // Current = Current + (Gap * Speed)
+    shipObj.position.y += (targetY - shipObj.position.y) * 0.1;
+    shipObj.position.x += (targetX - shipObj.position.x) * 0.1;
+
+    // 4. Rotate the Ship (Physics Feel)
+    // PITCH: moving Up/Down (Y) affects X rotation
+    // We calculate the gap (targetY - currentY) to know how "hard" we are pulling up
+    shipObj.rotation.x = (shipObj.position.y - targetY) * 0.0064;
+
+    // ROLL: moving Left/Right (X) affects Z rotation
+    // We calculate the gap (targetX - currentX) to know how hard to bank
+    shipObj.rotation.z = (targetY - shipObj.position.y) * 0.0128; // <--- WAIT! This is wrong in your code too.
     
+    // CORRECT ROLL LOGIC:
+    // If I move Right (Positive X), I should roll Right (Negative Z usually)
+    shipObj.rotation.z = (shipObj.position.x - targetX) * 0.0064;
 
-    // 3. Render (Take the picture)
+    // Rotate the sea to create the illusion of speed
+    // sea.mesh.rotation.z += 0.005;
+
+
+    // 5. Render
     renderer.render(scene, camera);
 }
 
