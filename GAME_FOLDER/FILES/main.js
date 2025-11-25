@@ -40,4 +40,17 @@ scene.add(myShip);
 // test.add(rightWing);
 // scene.add(test);
 // 5. The Initial Render (Taking the photo)
-renderer.render(scene, camera);
+function animate() {
+    // 1. Schedule the NEXT frame immediately
+    requestAnimationFrame(animate);
+
+    // 2. Update Logic (Move things)
+    ship.rotation.x += 0.01;
+    ship.rotation.y += 0.01;
+
+    // 3. Render (Take the picture)
+    renderer.render(scene, camera);
+}
+
+// 4. Kickstart the loop
+animate();
