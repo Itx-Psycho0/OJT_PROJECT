@@ -15,7 +15,7 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 // IMPORTANT: We must move the camera back! 
 // By default, the camera and objects spawn at (0,0,0). 
 // If the camera is inside the object, we won't see it.
-camera.position.z = 10;
+camera.position.set(0,100,200);
 // --- FIX: LOOK AT THE WORLD ---
 camera.lookAt(0, 0, 0); 
 // -----------------------------
