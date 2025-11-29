@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { SpaceShip } from "./Objects/SpaceShip.js";
+import { Sea } from "./Objects/Sea.js";
+
 
 
 let mousePos = { x: 0, y: 0 };
@@ -78,7 +80,8 @@ scene.add(directionalLight);
 // // Create the Sea
 // const sea = new Sea();
 // scene.add(sea.mesh);
-
+const seaSphere= new Sea();
+scene.add(seaSphere.mesh)
 
 
 // --- 5. HELPER FUNCTION (The Math) ---
@@ -140,6 +143,8 @@ function animate() {
 
     // Rotate the sea to create the illusion of speed
     // sea.mesh.rotation.z += 0.005;
+    seaSphere.mesh.rotation.z += 0.005;  // slow rotation
+    // seaSphere.mesh.rotation.x += 0.0002; // optional slight wobble
 
 
     // 5. Render
