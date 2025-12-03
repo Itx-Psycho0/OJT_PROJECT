@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { SpaceShip } from "./Objects/SpaceShip.js";
+import { SpaceShip } from "./Objects/Airplane.js";
 import { Sea } from "./Objects/Sea.js";
 
 
