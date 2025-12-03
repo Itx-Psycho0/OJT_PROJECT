@@ -69,13 +69,13 @@ document.addEventListener('mousemove', (event) => {
 
 
 
-
-// 3. Add Lighting to the Scene
-// Lighting (so we can see the 3D shapes properly)
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Soft white light
+// 3. Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
 scene.add(ambientLight);
+
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(5, 10, 7.5);
+directionalLight.position.set(10, 20, 10);
+directionalLight.castShadow = true;
 scene.add(directionalLight);
 
 // // Create the Sea
