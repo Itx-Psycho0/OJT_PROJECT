@@ -1,69 +1,70 @@
-import * as THREE from "three";
-import { Colors } from "./constants.js";
-import { normalize } from "./utils.js";
+import * as THREE from "three"; //import the three.js library
+import { Colors } from "./constants.js"; // import colors constants
+import { normalize } from "./utils.js"; // import normalize function
 
-import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js"; // addon for post-processing
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js"; // addon for rendering scene
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js"; // addn for bloom effect
 
-import { Sea } from "./Objects/Sea.js";
-import { Sky } from "./Objects/Sky.js";
-import {Airplane} from "./Objects/Airplane.js";
-import { Coin } from "./objects/Coin.js";
-import { Enemy } from "./Objects/Enemy.js";
-import { AmmoPack } from "./Objects/AmmoPack.js";
-import { Bullet } from "./Objects/Bullet.js";
-import { Boss } from "./Objects/Boss.js";
-import { Background } from "./Objects/Background.js";
-import {ParticleManager} from "./Objects/Particles.js";
-import { SoundManager } from "./SoundManager.js";
+import { Sea } from "./Objects/Sea.js"; // import Sea object
+import { Sky } from "./Objects/Sky.js"; // import Sky object
+import {Airplane} from "./Objects/Airplane.js";// import Airplane object
+import { Coin } from "./objects/Coin.js"; // import Coin object
+import { Enemy } from "./Objects/Enemy.js"; // import Enemy object
+import { AmmoPack } from "./Objects/AmmoPack.js";// import AmmoPack object
+import { Bullet } from "./Objects/Bullet.js"; // import Bullet object
+import { Boss } from "./Objects/Boss.js"; // import Boss object
+import { Background } from "./Objects/Background.js"; // import Background object
+import {ParticleManager} from "./Objects/Particles.js"; // import ParticleManager object
+import { SoundManager } from "./SoundManager.js"; // import SoundManager object
 
-// --- LEVEL CONFIG ---
+// LEVEL CONFIG
 const LEVEL_CONFIG = {
-  1: { target: 250, enemyChance: 0.02 },
-  2: { target: 500, enemyChance: 0.03 },
-  3: { target: 1000, enemyChance: 0.05 },
-  4: { target: 2000, enemyChance: 0.07 },
-  5: { target: 4000, enemyChance: 0.15 },
-  6: { target: 999999, enemyChance: 0.2 },
+  1: { target: 100, enemyChance: 0.02 },
+  2: { target: 300, enemyChance: 0.03 },
+  3: { target: 500, enemyChance: 0.04 },
+  4: { target: 1000, enemyChance: 0.05 },
+  5: { target: 1500, enemyChance: 0.07 },
+  6: { target: 3000, enemyChance: 0.1 },
 };
 
+// made a game class for better structure
 class Game {
-  constructor() {
-    this.scene = null;
-    this.camera = null;
-    this.renderer = null;
-    this.composer = null;
+  constructor() {// Game constructor initializes all properties
+    this.scene = null; // scene var
+    this.camera = null;// camera var
+    this.renderer = null;// renderer var
+    this.composer = null;// composer var
 
-    this.sea = null;
-    this.sky = null;
-    this.airplane = null;
-    this.background = null;
-    this.particles = null;
-    this.soundManager = null;
+    this.sea = null; // sea var
+    this.sky = null; // sky var
+    this.airplane = null; // airplane var
+    this.background = null; // background var
+    this.particles = null; // particles var
+    this.soundManager = null; // sound manager var
 
-    this.mousePos = { x: 0, y: 0 };
-    this.coins = [];
-    this.enemies = [];
-    this.ammoPacks = [];
-    this.bullets = [];
-    this.activeBoss = null;
+    this.mousePos = { x: 0, y: 0 }; // mouse position
+    this.coins = []; // coins array
+    this.enemies = []; // enemies array
+    this.ammoPacks = []; // ammopack array
+    this.bullets = []; // bullets array
+    this.activeBoss = null; // active boss var
 
-    this.score = 0;
-    this.energy = 100;
-    this.ammo = 30;
-    this.level = 1;
+    this.score = 0; //score
+    this.energy = 100; // energy
+    this.ammo = 30; // ammo
+    this.level = 1; // level
 
-    this.baseSpeed = 1.6;
-    this.gameSpeed = 1.6;
+    this.baseSpeed = 1.8; // base game speed
+    this.gameSpeed = 1.8; // current game speed
 
-    this.status = "waiting";
-    this.elapsedTime = 0;
-    this.shakeIntensity = 0;
+    this.status = "waiting"; // game status
+    this.elapsedTime = 0; // elapsed time
+    this.shakeIntensity = 0; // shake intensity
 
-    this.coinPattern = { active: false, count: 0, type: "random", timer: 0 };
+    this.coinPattern = { active: false, count: 0, type: "random", timer: 0 }; // coin pattern
 
-    this.init();
+    this.init();// call init method
   }
 
   init() {
@@ -239,7 +240,7 @@ class Game {
     requestAnimationFrame(() => this.loop());
   }
 
-  // --- BOSS LOGIC ---
+  // BOSS LOGIC
   spawnBoss() {
     if (this.activeBoss || this.status === "boss_fight") return;
     this.status = "boss_fight";
@@ -260,7 +261,7 @@ class Game {
 
     // 3. Create Boss
     this.activeBoss = new Boss();
-    this.activeBoss.maxHp = 20 + this.level * 10;
+    this.activeBoss.maxHp = 20 + this.level * 3;
     this.activeBoss.hp = this.activeBoss.maxHp;
 
     const scaleMod = 1 + this.level * 0.2;
@@ -296,7 +297,7 @@ class Game {
 
     // 2. Check if Boss passed the player (Escape)
     if (this.activeBoss.mesh.position.x < this.airplane.mesh.position.x - 50) {
-      this.energy = Math.floor(this.energy / 2); // Penalty
+      this.energy = Math.floor(this.energy / 3.5); // Penalty
       this.updateUI();
       this.airplane.hit(); // Shake screen
       this.killBoss(); // Level Up anyway (but punished)
@@ -321,7 +322,8 @@ class Game {
 
     // Restore Speed
     this.checkSpeedUp();
-    this.gameSpeed += 0.5; // Bonus speed for next level
+    this.gameSpeed += 0.2; // Bonus speed for next level
+    this.energy = 100; // Restore energy
 
     this.ammo = 30; // Refill ammo
     this.updateAmmoUI();
@@ -336,7 +338,7 @@ class Game {
     }
   }
 
-  // --- PROGRESSION CHECKS ---
+  // PROGRESSION CHECKS 
   checkLevelUp() {
     if (this.activeBoss) return;
 
@@ -347,16 +349,18 @@ class Game {
         this.spawnBoss();
       }
     } else if (!config && this.level >= 6) {
+      this.gameOver();
+      this.status = "game_over";
       // Infinite mode logic (optional)
     }
   }
 
   checkSpeedUp() {
     const speedStep = Math.floor(this.score / 200);
-    this.gameSpeed = this.baseSpeed + speedStep * 0.5;
+    this.gameSpeed = this.baseSpeed + speedStep * 0.2;
   }
 
-  // --- HELPERS ---
+  // HELPERS
   spawnCoins() {
     if (this.activeBoss) return;
     if (!this.coinPattern.active) {
@@ -369,11 +373,11 @@ class Game {
       }
     } else {
       if (this.coinPattern.count > 0) {
-        if (this.coinPattern.timer % 10 === 0) {
+        if (this.coinPattern.timer % 15 === 0) {
           const coin = new Coin();
           coin.mesh.position.x = this.width / 2 + 50;
           const t = this.coinPattern.timer;
-          const jitter = (Math.random() - 0.5) * 30;
+          const jitter = (Math.random() - 0.5) * 20;
           switch (this.coinPattern.type) {
             case "sine":
               coin.mesh.position.y = 100 + Math.sin(t * 0.3) * 50 + jitter;
@@ -388,7 +392,7 @@ class Game {
           }
           this.scene.add(coin.mesh);
           this.coins.push(coin);
-          this.coinPattern.count--;
+          // this.coinPattern.count--;
         }
         this.coinPattern.timer++;
       } else {
@@ -399,7 +403,7 @@ class Game {
   shoot() {
     if (this.status !== "playing" && this.status !== "boss_fight") return;
     const now = Date.now();
-    if (now - (this.lastShot || 0) < 150) return;
+    if (now - (this.lastShot || 0) < 100) return;
     this.lastShot = now;
     if (this.ammo > 0) {
       this.ammo--;
@@ -477,7 +481,7 @@ class Game {
         Math.random() * (175 - 25) + 25,
         0
       );
-      const s = 1 + this.level * 0.1;
+      const s = 1 + this.level * 0.05;
       e.mesh.scale.setScalar(s);
       this.scene.add(e.mesh);
       this.enemies.push(e);
@@ -488,7 +492,7 @@ class Game {
       const e = this.enemies[i];
       e.mesh.position.x -= 3 * this.gameSpeed;
       e.tick();
-      if (this.airplane.mesh.position.distanceTo(e.mesh.position) < 25) {
+      if (this.airplane.mesh.position.distanceTo(e.mesh.position) < 15) {
         this.removeEnergy();
         this.airplane.hit();
         this.particles.spawn(e.mesh.position, Colors.enemy, 20);
@@ -538,7 +542,7 @@ class Game {
     this.energy = Math.min(this.energy + amount, 100);
     this.updateUI();
   }
-  removeEnergy(amount = 15) {
+  removeEnergy(amount = 5) {
     this.energy -= amount;
     this.energy = Math.max(0, this.energy);
     const ui = document.querySelector(".game-ui");
@@ -550,7 +554,7 @@ class Game {
   }
   updateEnergyLoop() {
     if (this.status === "gameover") return;
-    const drain = this.status === "boss_fight" ? 0.01 : 0.05 * this.gameSpeed;
+    const drain = this.status === "boss_fight" ? 0.00 : 0.03 * this.gameSpeed;
     this.energy -= drain;
     if (this.energy <= 0) {
       this.energy = 0;
