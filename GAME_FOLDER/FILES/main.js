@@ -159,29 +159,36 @@ function animate() {
     // seaSphere.mesh.rotation.x += 0.0002; // optional slight wobble
 
     // Update Enemy Movement
+// 5. Update Enemy
     enemy.tick();
 
-    // Collision Detection
-    let distance = myShip.position.distanceTo(enemy.mesh.position);
-    console.log("Distance to Enemy:", distance);
+    // 6. Collision Detection
+    // <--- FIXED: Use shipObj (the actual mesh moving) not myShip
+    let distance = shipObj.position.distanceTo(enemy.mesh.position);
+    
+    // Debug log (remove later if spammy)
+    // console.log("Dist:", distance); 
 
-    if( distance < 15){
-        console.log("Collision Detected!");
+    if(distance < 200){ // Hit!
+        console.log("CRASH! Energy Lost.");
         energy -= 10;
-        console.log("Energy:", energy);
+        
+        // Visual Feedback: Knockback
+        shipObj.position.x -= 20; 
+        
+        // Reset Enemy immediately so it doesn't hit twice
         enemy.mesh.position.x = 200;
-        enemy.mesh.position.y = normalize(Math.random(), 0, 1, 25, 110);
-        myShip.position.x -= 20; // Knockback effect
+        // Randomize Y between -25 and 25
+        enemy.mesh.position.y = (Math.random() * 50) - 25; 
     }
 
-
-    // Logic: If it goes off screen to the left...
+    // 7. Enemy Recycle Logic
     if (enemy.mesh.position.x < -200) {
-        // ...teleport it back to the right!
+        // Teleport back to right
         enemy.mesh.position.x = 200;
 
-        // Randomize height slightly so it's not boring
-        enemy.mesh.position.y = normalize(Math.random()*50)-25; // Around ship height
+        // <--- FIXED: Simple math for range -25 to 25
+        enemy.mesh.position.y = (Math.random() * 50) - 25; 
     }
 
 
