@@ -20,8 +20,9 @@ camera.position.z = 10;
 camera.lookAt(0, 0, 0); 
 // -----------------------------
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);// Make it full screen
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true; // Enable Shadows
 const world = document.getElementById("world");
 world.appendChild(renderer.domElement);
 
