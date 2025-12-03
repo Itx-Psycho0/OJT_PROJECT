@@ -12,10 +12,10 @@ import {Airplane} from "./Objects/Airplane.js";
 import { Coin } from "./objects/Coin.js";
 import { Enemy } from "./Objects/Enemy.js";
 import { AmmoPack } from "./Objects/AmmoPack.js";
-import { Bullet } from "./objects/Bullet.js";
-import { Boss } from "./objects/Boss.js";
+import { Bullet } from "./Objects/Bullet.js";
+import { Boss } from "./Objects/Boss.js";
 import { Background } from "./Objects/Background.js";
-import { ParticleManager } from "./objects/Particles.js";
+import { ParticleManager } from "./Objects/ParticleManager.js";
 import { SoundManager } from "./SoundManager.js";
 
 // --- LEVEL CONFIG ---
