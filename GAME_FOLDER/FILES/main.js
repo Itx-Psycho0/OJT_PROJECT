@@ -162,7 +162,7 @@ function animate() {
         enemy.mesh.position.x = 200;
 
         // Randomize height slightly so it's not boring
-        enemy.mesh.position.y = normalize(Math.random(), 0, 1, 25, 150);
+        enemy.mesh.position.y = normalize(Math.random(), 0, 1, 25, 130);
     }
 
 
