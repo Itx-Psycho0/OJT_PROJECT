@@ -15,7 +15,7 @@ import { AmmoPack } from "./Objects/AmmoPack.js";
 import { Bullet } from "./Objects/Bullet.js";
 import { Boss } from "./Objects/Boss.js";
 import { Background } from "./Objects/Background.js";
-import { ParticleManager } from "./Objects/ParticleManager.js";
+import {ParticleManager} from "./Objects/Particles.js";
 import { SoundManager } from "./SoundManager.js";
 
 // --- LEVEL CONFIG ---
