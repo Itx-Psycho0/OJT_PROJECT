@@ -1,9 +1,11 @@
 import * as THREE from "three";
 import { SpaceShip } from "./Objects/SpaceShip.js";
 import { Sea } from "./Objects/Sea.js";
+import { Enemy } from "./Objects/Enemy.js";
 
 
 
+// Global Variables 
 let mousePos = { x: 0, y: 0 };
 
 
@@ -50,6 +52,12 @@ myShip.rotation.y = -90 * (Math.PI / 180) + mousePos.x * 0.5;
 // rightWing.position.set(1, 0, 0);
 // test.add(rightWing);
 // scene.add(test);
+
+// Create an Enemy and add it to the scene
+const enemy = new Enemy();
+enemy.mesh.position.y = 60; // Same height as ship
+enemy.mesh.position.x = 200; // Far to the right
+scene.add(enemy.mesh);
 
 // use mouse move to rotate the ship
 document.addEventListener('mousemove', (event) => {
@@ -135,7 +143,7 @@ function animate() {
 
     // ROLL: moving Left/Right (X) affects Z rotation
     // We calculate the gap (targetX - currentX) to know how hard to bank
-    shipObj.rotation.z = (targetY - shipObj.position.y) * 0.0128; // <--- WAIT! This is wrong in your code too.
+    shipObj.rotation.z = (targetY - shipObj.position.y) * 0.0128; // 
     
     // CORRECT ROLL LOGIC:
     // If I move Right (Positive X), I should roll Right (Negative Z usually)
