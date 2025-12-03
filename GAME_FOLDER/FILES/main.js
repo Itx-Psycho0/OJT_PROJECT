@@ -6,7 +6,9 @@ import { Enemy } from "./Objects/Enemy.js";
 
 
 // Global Variables 
+let energy = 100;
 let mousePos = { x: 0, y: 0 };
+
 
 
 // 1. Create the Scene, Camera, and Renderer
@@ -59,6 +61,8 @@ enemy.mesh.position.y = 60; // Same height as ship
 enemy.mesh.position.x = 200; // Far to the right
 scene.add(enemy.mesh);
 
+let dist = myShip.position.distanceTo(enemy.mesh.position);
+console.log("Initial Distance to Enemy:", dist);
 // use mouse move to rotate the ship
 document.addEventListener('mousemove', (event) => {
     // Convert mouse position to normalized device coordinates (-1 to +1)
@@ -124,8 +128,8 @@ function animate() {
 
     // 2. Calculate Targets (Where we WANT to be)
     // -75 to 75 is the range of the world
-    let targetX = normalize(mousePos.x, -0.75, 0.75, -3, 3);
-    let targetY = normalize(mousePos.y, -0.75, 0.75, -5, 5);
+    let targetX = normalize(mousePos.x, -0.75, 0.75, -1, 3);
+    let targetY = normalize(mousePos.y, -0.75, 0.75, -1, 5);
 
     // 3. Move the Ship (Lerp)
     // We check if .mesh exists, otherwise we use myShip directly
@@ -156,13 +160,24 @@ function animate() {
 
     // Update Enemy Movement
     enemy.tick();
+
+    if(dist<15){
+        console.log("Collision Detected!");
+        energy -= 10;
+        console.log("Energy:", energy);
+        enemy.mesh.position.x = 200;
+        enemy.mesh.position.y = normalize(Math.random(), 0, 1, 25, 110);
+        myShip.position.x -= 20; // Knockback effect
+    }
+
+
     // Logic: If it goes off screen to the left...
     if (enemy.mesh.position.x < -200) {
         // ...teleport it back to the right!
         enemy.mesh.position.x = 200;
 
         // Randomize height slightly so it's not boring
-        enemy.mesh.position.y = normalize(Math.random(), 0, 1, 25, 130);
+        enemy.mesh.position.y = normalize(Math.random(), 0, 1, 25, 110);
     }
 
 

@@ -8,7 +8,6 @@ export class Enemy {
         
         const mat = new THREE.MeshStandardMaterial({
             color: 0xf25346, // Red
-            shininess: 0,
             flatShading: true,
         });
 
