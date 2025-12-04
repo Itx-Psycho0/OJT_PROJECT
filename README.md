@@ -44,8 +44,10 @@ This game challenges your reflexes while immersing you in a glowing, futuristic 
 
 GAME_FOLDER/FILES
 │
+│
 ├── **node_modules/**  
 │   Dependencies installed by npm.
+│
 │
 ├── **src/**  
 │   All JavaScript game logic.  
@@ -65,20 +67,26 @@ GAME_FOLDER/FILES
 │   └── **main.js**  
 │       Main game file — initializes the scene, renderer, camera, game loop, etc.
 │
+│
 ├── **.gitignore**  
 │   Git ignore rules for excluding files like node_modules.  
+│
 │
 ├── **index.html**  
 │   Main HTML entry point of the game.
 │
+│
 ├── **style.css**  
 │   UI and styling used in the HTML elements.
+│
 │
 ├── **package.json**  
 │   Project metadata, npm scripts, and dependencies.
 │
+│
 ├── **package-lock.json**  
 │   Locked versions of installed dependencies.
+│
 │
 └── **README.md**  
     Documentation for the project.
