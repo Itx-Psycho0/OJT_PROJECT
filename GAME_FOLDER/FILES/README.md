@@ -1,6 +1,6 @@
-# ✈️ SkyRunner 3D – A Fast-Paced Three.js Air Combat Runner
+# ✈️ Ejected Cube : A Fast-Paced Three.js Air Combat Runner
 
-SkyRunner 3D is a fully interactive endless flying game built with **Three.js**, featuring smooth animations, boss fights, particle effects, bloom rendering, dynamic environments, enemy AI, and a polished UI/UX.
+Ejected Cube is a fully interactive endless flying game built with **Three.js**, featuring smooth animations, boss fights, particle effects, bloom rendering, dynamic environments, enemy AI, and a polished UI/UX.
 
 This game challenges your reflexes while immersing you in a glowing, futuristic sky world.
 
@@ -59,5 +59,3 @@ GAME_FOLDER
 ├── package.json               ← Project metadata + scripts
 ├── package-lock.json          ← Exact dependency versions
 └── README.md                  ← Documentation
-## 🎮 Gameplay Preview
-<video controls src="./Assets/DemoVideo.mp4" title="Title"></video>
