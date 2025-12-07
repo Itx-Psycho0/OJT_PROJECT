@@ -1,16 +1,13 @@
 {
+  "name": "ojt-project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "three": "^0.181.2"
-  },
-  "name": "files",
-  "version": "1.0.0",
-  "description": "SkyRunner 3D is a fully interactive endless flying game built with **Three.js**, featuring smooth animations, boss fights, particle effects, bloom rendering, dynamic environments, enemy AI, and a polished UI/UX.",
-  "main": "index.js",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  }
 }
