@@ -38,7 +38,31 @@ This game challenges your reflexes while immersing you in a glowing, futuristic 
 - Enemy spawn rate increases each level  
 - Boss fights introduce new challenge spikes  
 
+## 🎮 How to Play
+
+### 🛩️ Controls
+- **Move Plane:** Move your **mouse** inside the game window.
+- **Shoot Bullets:** **Left-click** or **Hold Left Mouse Button** to fire continuously.
+- **Collect Coins:** Fly through glowing coins to gain score.
+- **Pick Ammo Packs:** Move over ammo cubes to refill bullets.
+- **Avoid Enemies:** Colliding with enemies reduces your health.
+- **Boss Fight:** Dodge boss projectiles and shoot to reduce its HP.
+
+### ⚙️ Gameplay Mechanics
+- **Health:** Drops on collision. Game ends at 0 HP.
+- **Ammo:** Shooting consumes ammo; refill using ammo packs.
+- **Energy:** Used for boosts or effects (optional based on build).
+- **Speed:** Increases automatically as distance increases.
+- **Level Up:** Reaching score/distance thresholds triggers a boss fight.
+
+### 🏆 Objectives
+- Survive as long as possible.
+- Defeat bosses to unlock levels.
+- Collect coins to increase score.
+- Manage ammo and health efficiently.
+- 
 ---
+
 
 
 
