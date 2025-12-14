@@ -542,7 +542,7 @@ class Game {
     this.energy = Math.min(this.energy + amount, 100);
     this.updateUI();
   }
-  removeEnergy(amount = 5) {
+  removeEnergy(amount =20) {
     this.energy -= amount;
     this.energy = Math.max(0, this.energy);
     const ui = document.querySelector(".game-ui");
