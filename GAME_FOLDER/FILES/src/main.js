@@ -21,11 +21,11 @@ import { SoundManager } from "./SoundManager.js"; // import SoundManager object
 // LEVEL CONFIG
 const LEVEL_CONFIG = {
   1: { target: 100, enemyChance: 0.02 },
-  2: { target: 300, enemyChance: 0.03 },
-  3: { target: 500, enemyChance: 0.04 },
-  4: { target: 1000, enemyChance: 0.05 },
-  5: { target: 1500, enemyChance: 0.07 },
-  6: { target: 3000, enemyChance: 0.1 },
+  2: { target: 300, enemyChance: 0.1 },
+  3: { target: 500, enemyChance: 0.2 },
+  4: { target: 1000, enemyChance: 0.3 },
+  5: { target: 1500, enemyChance: 0.4 },
+  6: { target: 3000, enemyChance: 0.5 },
 };
 
 // made a game class for better structure
